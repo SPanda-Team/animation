@@ -1,0 +1,38 @@
+.linear_Layout {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+/* 基色 */
+.color1 {
+  color: #66CCCC;
+}
+.color2 {
+  color: #FFFFFF;
+}
+.color3 {
+  color: #666699;
+}
+.color4 {
+  color: #FF9999;
+}
+.color5 {
+  color: #FFCC99;
+}
+/* 英文字体 */
+@font-face
+{
+   font-family: AnuDaw;
+   src: url(./font/AnuDaw.ttf);
+}
+@font-face
+{
+   font-family: DanielBlack;
+   src: url(./font/DanielBlack.ttf);
+}
+/* 中文字体 */
+@font-face
+{
+   font-family: guodong;
+   src: url(./font/guodong.ttf);
+}
