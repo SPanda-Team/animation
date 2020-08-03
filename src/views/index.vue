@@ -47,15 +47,24 @@
         <div id="head_liq" class="imgContainer transition_roate animate__backInDown" v-show="liq">
           <img src="../assets/headSculpture/liq.jpg" />
         </div>
-        <div id="head_liun" class="imgContainer transition_roate">
-          <img src="../assets/headSculpture/liun.jpg" />
+        <div id="head_liun" class="imgContainer transition_roate wrapperImg">
+          <div class="cube">
+            <!--正方体的box-->
+            <!--这个是大的正方体的六面-->
+            <img class="out-front" src="../assets/headSculpture/liun.jpg" />
+            <img class="out-back" src="../assets/headSculpture/liun.jpg" />
+            <img class="out-left" src="../assets/headSculpture/liun.jpg" />
+            <img class="out-right" src="../assets/headSculpture/liun.jpg" />
+            <img class="out-top" src="../assets/headSculpture/liun.jpg" />
+            <img class="out-bottom" src="../assets/headSculpture/liun.jpg" />  
+          </div>
         </div>
       </div>
       <div class="row">
         <div id="head_liuty" class="imgContainer transition_big" v-show="liuty">
           <img src="../assets/headSculpture/liuty.jpg" />
         </div>
-        <div id="head_piyp" class="imgContainer ani3s transition_biganimate__rubberBand" v-show="piyp">
+        <div id="head_piyp" class="imgContainer ani3s transition_big animate__rubberBand" v-show="piyp">
           <img src="../assets/headSculpture/piyp.jpg" />
         </div>
         <div id="head_tanzq" class="imgContainer ani3s transition_big animate__swing" v-show="tanzq">
@@ -391,8 +400,9 @@ export default {
     border-radius: 5px;
   }
   img {
-    width: 100%;
-    height: 100%;
+    display: block;
+    width: 150px;
+    height: 150px;
   }
 
   .transition_roate {
@@ -466,4 +476,80 @@ export default {
   .row3 {
     animation: backInUp 3s;
   }
+
+.wrapperImg{
+    perspective: 1000px;  /*景深设置，视图距元素的距离  相当于摄像机*/
+}
+  /*动画关键帧，翻滚吧！牛宝宝*/
+@keyframes move{
+    0%{
+        transform:rotateX(0deg) rotateY(0deg) rotateZ(0deg) ;
+    }
+    100%{
+        transform:rotateX(720deg) rotateY(360deg) rotateZ(360deg);
+    }
+}
+.cube{
+    width: 150px;                                               /*box设置宽度200像素*/
+    height: 150px;                                              /*设置高度200像素*/
+    position: relative;                                         /*开启相对定位，好让里面的元素开启定位时不会高度塌陷*/
+    color: #ff92ff;                                             /*字体的颜色*/
+    font-size: 36px;                                            /*字体大小*/
+    font-weight: 100;                                           /*字体细小*/
+    text-align: center;                                         /*文本字体左右居中*/
+    line-height: 200px;                                         /*行高设置，这样文本就在比box中是上下居中*/
+    
+    
+    transform-style: preserve-3d ;                              /*开启这个，表示所有元素在3D平面呈现*/
+    transform: rotateX(-50deg) rotateY(-50deg) rotateZ(0deg);   /*一开始的角度，视觉上看一下*/
+    animation: move 8s infinite linear;                         /*启动动画的名字、时长、无限循环、匀速播放*/
+}
+/*大的正方体的设置*/
+.cube>img{
+    width: 100%;                              /*设置的宽度和父级一样*/
+    height: 100%;                             /*设置的高度一样*/
+    border: 10px solid #66daff;               /*边框设置*/
+    border-radius: 20px;                      /*设置一下圆角*/
+    position: absolute;                       /*开启绝对定位，这样就全部叠在一起了*/
+    background-color: rgba(51,51,51,.3);      /*来个背景色，30%的透明度*/
+    transition:transform 0.3s ease-in;        /*过度变形的时间设置和快慢设置*/
+}
+/*设置大的正方体的六个面的位置*/
+.cube img.out-front{
+    transform: translateZ(75px);                   /*设置前面的那一面的Z轴往前移*/
+}
+.cube img.out-back{
+    transform: translateZ(-75px) rotateY(180deg);  /*设置后面的那一面的Z轴往后移，Y轴转一下。使得的背面的那一面是面向背面的*/
+}
+.cube img.out-left{
+    transform: translateX(-75px) rotateY(-90deg);  /*设置左边的那一面在X轴上退一些，向左转*/
+}
+.cube img.out-right{
+    transform: translateX(75px) rotateY(90deg);    /*设置右边的那一面在X轴上进一些，向右转*/
+}
+.cube img.out-top{
+    transform: translateY(-75px) rotateX(90deg);   /*设置上边的那一面在Y轴上去一些，向后翻转*/
+}
+.cube img.out-bottom{
+    transform: translateY(75px) rotateX(-90deg);   /*设置下边的那一面在X轴下去一些，向前翻*/
+}
+/*当鼠标滑过这个div的时候。过渡变化下面的事件*/
+.cube:hover .cube img.out-front{
+    transform: translateZ(100px);                   /*当鼠标滑过，前面就往前凸*/
+}
+.cube:hover .cube img.out-back{
+    transform: translateZ(-100px) rotateY(180deg);  /*当鼠标滑过，前面就往后跑，加了旋转是因为一开始是平面的，不加会变会原样*/
+}
+.cube:hover .cube img.out-left{
+    transform: translateX(-100px) rotateY(-90deg);  /*当鼠标滑过，左面就往左飞*/
+}
+.cube:hover .cube img.out-right{
+    transform: translateX(100px) rotateY(90deg);    /*当鼠标滑过，右面就往右进*/
+}
+.cube:hover .cube img.out-top{
+    transform: translateY(-100px) rotateX(90deg);   /*当鼠标滑过，上面就往上冒*/
+}
+.cube:hover .cube img.out-bottom{
+    transform: translateY(100px) rotateX(-90deg);   /*当鼠标滑过，下面就往下弹*/
+}
 </style>
