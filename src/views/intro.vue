@@ -88,7 +88,7 @@
 
 <script>
 export default {
-  name: 'index',
+  name: 'intro',
   data () {
     return {
       height: 0, // 高度
