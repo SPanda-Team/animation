@@ -1,18 +1,31 @@
 <template>
   <div class="page">
-    <div class="row" v-show="nowRow == 1">
-      <div class="input1">
-        <input value="你好">
-        <span class="callout">请输入中文，长度在10个字以内</span>
-      </div>
-      <div class="input2">
-        <input value="你好">
-        <span class="hint">请输入中文，长度在10个字以内</span>
-      </div>
+    <div class="row">
+      <transition name="show">
+        <div class="row" v-show="nowRow == 1">
+          <div class="input1">
+            <input value="你好">
+            <span class="callout">请输入中文，长度在10个字以内</span>
+          </div>
+          <div class="input2">
+            <input value="你好">
+            <span class="hint">请输入中文，长度在10个字以内</span>
+          </div>
+        </div>
+      </transition>
+      <transition name="show">
+        <div class="row" v-show="nowRow == 2">
+          <div class="loader"></div>
+        </div>
+      </transition>
+      <transition name="show">
+        <div class="row" v-show="nowRow == 3">
+          <div class="loader"></div>
+        </div>
+      </transition>
     </div>
-    <div class="row" v-show="nowRow == 2">
-      <div class="loader"></div>
-    </div>
+    <div class="button" @click="row(1)">一个关于贝塞尔曲线的例子</div>
+    <div class="button" @click="row(2)">一个关于阶跃函数的例子</div>
   </div>
 </template>
 
@@ -21,7 +34,7 @@ export default {
   name: 'ani',
   data () {
     return {
-      nowRow: 1,
+      nowRow: 0,
     };
   },
   created() {
@@ -30,7 +43,12 @@ export default {
 
   },
   methods: {
-
+    row(index) {
+      this.nowRow = 0;
+      setTimeout(() => {
+        this.nowRow = index;
+      }, 1000);
+    }
   }
 };
 </script>
@@ -58,11 +76,53 @@ export default {
     height: 100vh;
   }
   .row {
-    padding: 10px;
+    height: 30vh;
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    align-items: center;
     font-size: 16px;
+  }
+  .button {
+    height: 4vw;
+    line-height: 4vw;
+    width: 90%;
+    margin: 2vw auto;
+    font-size: 2vw;
+    text-align: center;
+    cursor: pointer;
+    color: #1B9AF7;
+    border: 1px solid #1B9AF7;
+    border-radius: 4px;
+  }
+  .button:hover{
+    color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(76, 176, 249, 0.9);
+    animation-name: glowing-primary;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+  }
+  @keyframes glowing-primary {
+    from {
+      box-shadow: 0 0 0 rgba(27, 154, 247, 0.3); 
+    }
+    50% {
+      box-shadow: 0 0 20px rgba(27, 154, 247, 0.8); 
+    }
+    to {
+      box-shadow: 0 0 0 rgba(27, 154, 247, 0.3); 
+    } 
+  }
+
+  .show-enter-active {
+    transition: all 1s;
+  }
+  .show-leave-active {
+    transition: all 1s;
+  }
+  .show-enter, .show-leave-to {
+    opacity: 0;
   }
 
   input {
